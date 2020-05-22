@@ -1,15 +1,17 @@
 package hangman;
 import java.util.Random;
 import java.util.Scanner; 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class hangman {
     public static String RandomCapital() {
         // https://stackoverflow.com/questions/21726033/picking-a-random-item-from-an-array-of-strings-in-java
-        final String[] capitals = {"TOKYO", "PEKIN", "OSLO", "WARSAW", "CANABERRA"};
+        // final String[] capitals = {"TOKYO", "PEKIN", "OSLO", "WARSAW", "CANABERRA"};
+        final String[] capitals = {"TOKYO"};
+
         Random random = new Random();
         int index = random.nextInt(capitals.length);
-        // System.out.println(capitals[index]);
         return capitals[index];
     }
 
@@ -21,9 +23,10 @@ public class hangman {
         return hash;
     }
 
-    public static void PrintUsedLetters(char[] UsedLetters){
-        for (int i = 0; i < UsedLetters.length; i++){
-            System.out.print(UsedLetters[i] + " ");
+    public static void PrintUsedLetters(List<Character> UsedLetters){
+        System.out.println("You used following letters already: ");
+        for (int i = 0; i < UsedLetters.size(); i++){
+            System.out.print(UsedLetters.get(i) + " ");
         }
         System.out.println("");
     }
@@ -59,6 +62,19 @@ public class hangman {
         return OutputChar;
     }
 
+    public static void PrintSpaces(int qty){
+        for (int i = 0; i < qty; i++){
+            System.out.println("");
+        }
+    }
+
+    public static boolean LetterInArray(char CurrentLetter, List<Character> LetterArray){
+        boolean IsInArray = false;
+        for (int i = 0; i < LetterArray.size(); i++){
+            if (LetterArray.get(i) == CurrentLetter) IsInArray = true;
+        }
+        return IsInArray;
+    }
 
     public static void main(String[] args) { 
         // get capital list 
@@ -69,7 +85,7 @@ public class hangman {
         String hash = GenerateHash(password);
 
         boolean IsRunning = true;
-        char[] UsedLetters = {'A', 'B'};
+        List<Character> UsedLetters = new ArrayList<>();
 
         // main loop:
         while(IsRunning == true){
@@ -77,24 +93,35 @@ public class hangman {
             System.out.println(hash);
 
             // print used letters
-            System.out.println("You used following letters already: ");
             PrintUsedLetters(UsedLetters);
 
             // ask user for input
             char UserInput = GetAndValidateInput();
-            System.out.println(UserInput);
+
+            // add letter from user to input list 
+            if (LetterInArray(UserInput, UsedLetters) == false)  UsedLetters.add(UserInput);
 
             // compare input against password
+            String UpdatedHash = "";
+            for(int LetterIndex = 0; LetterIndex < password.length(); LetterIndex++){
                 //if input is in password fill word in hash..
-                //else...
+                // UpdatedHash = "";
+                if (password.charAt(LetterIndex) == UserInput){
+                    UpdatedHash += UserInput;
+                } else if (Character.isLetter(hash.charAt(LetterIndex)) == true){
+                    UpdatedHash += password.charAt(LetterIndex);
+                } else {
+                    UpdatedHash += "_";
+                } 
+            }
+            hash = UpdatedHash.toString();
+
+
+
             // if hash == capital 
                 // break from loop and print victory
+            
+            PrintSpaces(3);
         }
-
     }
-
-
-    
-
-
 }
