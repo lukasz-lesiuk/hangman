@@ -28,6 +28,26 @@ public class hangman {
         System.out.println("");
     }
 
+    public static char GetAndValidateInput(){
+
+        char charInputValue = Character.MIN_VALUE;
+        Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+
+        while(true){
+            System.out.println("Enter slingle letter");
+            String inputValue = scanner.nextLine();  // Read user input
+            charInputValue = inputValue.charAt(0);
+            if (Character.isLetter(charInputValue) == true) {
+                // System.out.println("Correct input, exit");
+                break;
+            } else {
+                System.out.println("Input is not a single letter!");
+            }
+        }
+        // scanner.close();
+        return charInputValue;
+    }
+
     public static void main(String[] args) { 
         // get capital list 
         // pick capital
@@ -37,7 +57,7 @@ public class hangman {
         String hash = GenerateHash(password);
 
         boolean IsRunning = true;
-        char[] UsedLetters = {'A'};
+        char[] UsedLetters = {'A', 'B'};
 
         // main loop:
         while(IsRunning == true){
@@ -48,12 +68,13 @@ public class hangman {
             System.out.println("You used following letters already: ");
             PrintUsedLetters(UsedLetters);
 
-
             // ask user for input
-            Scanner scan = new Scanner(System.in);
-            String s = scan.next();
-            int i = scan.nextInt();
-            scan.close();
+            char UserInput = GetAndValidateInput();
+            System.out.println(UserInput);
+
+            // change input to uppercase
+            // UserInput = ToUpper(UserInput);
+
             // compare input against password
                 //if input is in password fill word in hash..
                 //else...
