@@ -1,5 +1,6 @@
 package hangman;
 import java.util.Random;
+import java.util.Scanner; 
 
 
 public class hangman {
@@ -20,6 +21,13 @@ public class hangman {
         return hash;
     }
 
+    public static void PrintUsedLetters(char[] UsedLetters){
+        for (int i = 0; i < UsedLetters.length; i++){
+            System.out.print(UsedLetters[i] + " ");
+        }
+        System.out.println("");
+    }
+
     public static void main(String[] args) { 
         // get capital list 
         // pick capital
@@ -35,10 +43,17 @@ public class hangman {
         while(IsRunning == true){
             // print hash
             System.out.println(hash);
-            System.out.println("You used following letters already" + UsedLetters);
 
             // print used letters
+            System.out.println("You used following letters already: ");
+            PrintUsedLetters(UsedLetters);
+
+
             // ask user for input
+            Scanner scan = new Scanner(System.in);
+            String s = scan.next();
+            int i = scan.nextInt();
+            scan.close();
             // compare input against password
                 //if input is in password fill word in hash..
                 //else...
