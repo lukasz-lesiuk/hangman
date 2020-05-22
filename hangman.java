@@ -38,7 +38,7 @@ public class hangman {
             String inputValue = scanner.nextLine();  // Read user input
             charInputValue = inputValue.charAt(0);
             if (Character.isLetter(charInputValue) == true) {
-                // System.out.println("Correct input, exit");
+                charInputValue = ToUpper(charInputValue);
                 break;
             } else {
                 System.out.println("Input is not a single letter!");
@@ -47,6 +47,18 @@ public class hangman {
         // scanner.close();
         return charInputValue;
     }
+
+    public static char ToUpper(char InputChar){
+        char OutputChar = Character.MIN_VALUE;
+        if (Character.isLowerCase(InputChar) == true){
+            OutputChar = Character.toUpperCase(InputChar);
+        } else {
+            OutputChar = InputChar;
+        }
+
+        return OutputChar;
+    }
+
 
     public static void main(String[] args) { 
         // get capital list 
@@ -71,9 +83,6 @@ public class hangman {
             // ask user for input
             char UserInput = GetAndValidateInput();
             System.out.println(UserInput);
-
-            // change input to uppercase
-            // UserInput = ToUpper(UserInput);
 
             // compare input against password
                 //if input is in password fill word in hash..
