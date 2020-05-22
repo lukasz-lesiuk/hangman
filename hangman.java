@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class hangman {
+
+    // public static String[] GetCapitalList(){
+
+    // }
+
     public static String RandomCapital() {
         // https://stackoverflow.com/questions/21726033/picking-a-random-item-from-an-array-of-strings-in-java
         // final String[] capitals = {"TOKYO", "PEKIN", "OSLO", "WARSAW", "CANABERRA"};
@@ -76,9 +81,16 @@ public class hangman {
         return IsInArray;
     }
 
+    public static boolean CheckIfWon(String Hash, String Passsword){
+        boolean DidWin = false; 
+        if (Hash == Passsword) DidWin = true;
+        return DidWin;
+    }
+
+
     public static void main(String[] args) { 
-        // get capital list 
-        // pick capital
+
+        // get capital list and pick capital
         String password = RandomCapital();
 
         // hash capital
@@ -102,6 +114,7 @@ public class hangman {
             if (LetterInArray(UserInput, UsedLetters) == false)  UsedLetters.add(UserInput);
 
             // compare input against password
+            // MOVE TO METHOD
             String UpdatedHash = "";
             for(int LetterIndex = 0; LetterIndex < password.length(); LetterIndex++){
                 //if input is in password fill word in hash..
@@ -116,10 +129,11 @@ public class hangman {
             }
             hash = UpdatedHash.toString();
 
-
-
-            // if hash == capital 
-                // break from loop and print victory
+            // check victory condition
+            if (CheckIfWon(hash, password) == true){
+                System.out.println("YOU WON");
+                IsRunning = false;
+            }
             
             PrintSpaces(3);
         }
